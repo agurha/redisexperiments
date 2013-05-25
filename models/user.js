@@ -12,11 +12,11 @@ module.exports = function (redis) {
 
   var user = {
 
-    createUser: function (username, email, password, cb) {
+    createUser: function (usermodel, cb) {
 
-      console.log('username: ' + username);
-      console.log('email:' + email);
-      console.log('password:' + password);
+      console.log('username: ' + usermodel.username);
+      console.log('email:' + usermodel.email);
+      console.log('password:' + usermodel.password);
 
       redis.incr('user:id', function (error, id) {
         if (error) {
@@ -24,11 +24,12 @@ module.exports = function (redis) {
         }
 
         redis.multi()
-          .hset('users:', username, id)
-          .hmset('user:' + id, {
-            username: username,
-            email: email,
-            password: password
+          .hset('users:', usermodel.username, id)
+          .hmset('user:' + usermodel.username, {
+            id : id,
+            username: usermodel.username,
+            email: usermodel.email,
+            password: usermodel.password
 
           })
           .exec(function (err, results) {

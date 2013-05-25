@@ -26,7 +26,13 @@ describe('usermodel', function () {
     var email = 'ankur.gurha@gmail.com';
     var password = 123456;
 
-    user.createUser(redisClient, email, password, function (err, result) {
+    var usermodel = {};
+    usermodel.email = 'ankur.gurha@gmail.com';
+    usermodel.password = '123456';
+    usermodel.username = 'agurha';
+
+
+    user.createUser(usermodel, function (err, result) {
 
       console.log('result we got is : ' + result);
 
